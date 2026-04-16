@@ -33,7 +33,7 @@ PRODUCTOS = {
     "robots": 114, "leche": 117, "cafe": 118, "vegetales": 120,
     "pan": 133, "queso": 137,
     "uvas": 10, "camiones": 59,
-    "cemento": 102, # ID del Cemento añadido
+    "cemento": 103, # ID del Cemento añadido
 }
 
 @bot.event
