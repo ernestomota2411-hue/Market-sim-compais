@@ -11,7 +11,8 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 PRODUCTOS = {
     "energia": 1, "agua": 2, "manzanas": 3, "naranjas": 4, "petroleo": 5,
-    "grano": 6, "filetes": 7, "salchichas": 8, "huevos": 9, "transporte": 13,
+    "grano": 6, "filetes": 7, "salchichas": 8, "huevos": 9,
+    "unidades_construccion": 11, "transporte": 13,
     "bauxita": 15, "silicio": 16, "aluminio": 18, "plastico": 19,
     "procesadores": 20, "componentes_electronicos": 21, "baterias": 22,
     "pantallas": 23, "smartphones": 24, "tablets": 25, "laptops": 26,
@@ -156,8 +157,8 @@ async def productos(ctx):
         "Agricultura y Alimentos": ["semillas", "manzanas", "naranjas", "uvas", "grano", "filetes",
                                      "salchichas", "huevos", "caña_azucar", "algodon", "leche", "cafe",
                                      "vegetales", "pan", "queso"],
-        "Materiales y Construccion": ["acero", "vidrio", "aluminio", "plastico", "cuero", "hormigon",
-                                       "ladrillos", "madera", "tablones", "ventanas"],
+        "Materiales y Construccion": ["unidades_construccion", "acero", "vidrio", "aluminio", "plastico",
+                                       "cuero", "hormigon", "ladrillos", "madera", "tablones", "ventanas"],
         "Electronica y Tecnologia": ["procesadores", "componentes_electronicos", "baterias", "pantallas",
                                       "smartphones", "tablets", "laptops", "monitores", "televisores",
                                       "software", "robots"],
