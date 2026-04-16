@@ -8,30 +8,19 @@ TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-
 PRODUCTOS = {
-    "energia": 1, "agua": 2, "manzanas": 3, "naranjas": 4, "petroleo": 5,
-    "grano": 6, "filetes": 7, "salchichas": 8, "huevos": 9,
-    "unidades": 111, "transporte": 13,
-    "bauxita": 15, "silicio": 16, "aluminio": 18, "plastico": 19,
-    "procesadores": 20, "componentes_electronicos": 21, "baterias": 22,
-    "pantallas": 23, "smartphones": 24, "tablets": 25, "laptops": 26,
-    "monitores": 27, "televisores": 28,
-    "investigacion_energia": 30, "investigacion_mineria": 31, "investigacion_electronica": 32,
-    "algodon": 40, "mineral_hierro": 42, "acero": 43, "arena": 44, "vidrio": 45,
-    "cuero": 46, "motores_electricos": 48,
-    "motores_combustion": 52, "coche_economico": 55, "coche_lujo": 56,
-    "carroceria": 57, "neumaticos": 58,
-    "ropa": 62, "bolsos": 64, "software": 65, "semillas": 66,
-    "oro": 68, "oro_barras": 69, "caña_azucar": 72, "metano": 74,
-    "fuselaje": 77, "alas": 78, "computadora_vuelo": 80,
-    "combustible_cohete": 83, "motor_jet": 89, "propulsor": 92,
-    "avion_lujo": 96, "satelite": 99,
-    "hormigon": 101, "ladrillos": 102, "carbon": 103, "arcilla": 104,
-    "piedra_caliza": 105, "madera": 106, "tablones": 108, "ventanas": 109,
-    "robots": 114, "leche": 117, "cafe": 118, "vegetales": 120,
-    "pan": 133, "queso": 137,
-    "uvas": 10, "camiones": 59,
+    "agua": 1, "energia": 2, "petroleo": 12, "mineral_hierro": 42, "bauxita": 15, 
+    "silicio": 16, "oro": 46, "oro_barras": 47, "carbon": 41, "metano": 74,
+    "semillas": 66, "manzanas": 3, "naranjas": 4, "uvas": 10, "grano": 6, 
+    "filetes": 7, "salchichas": 8, "huevos": 9, "caña_azucar": 72, "algodon": 40, 
+    "leche": 117, "cafe": 118, "vegetales": 120, "pan": 133, "queso": 137,
+    "hormigon": 100, "piedra_caliza": 101, "arcilla": 102, "cemento": 103, 
+    "ladrillos": 104, "madera": 106, "tablones": 108, "ventanas": 109, "unidades": 110,
+    "procesadores": 24, "componentes_electronicos": 21, "baterias": 22, 
+    "pantallas": 23, "smartphones": 26, "tablets": 25, "laptops": 27, 
+    "monitores": 28, "televisores": 29, "software": 65, "robots": 114,
+    "transporte": 13, "acero": 43, "vidrio": 45, "aluminio": 18, "plastico": 19, "cuero": 44,
+    "camiones": 57, "coche_economico": 55, "coche_lujo": 56
 }
 
 @bot.event
@@ -158,7 +147,7 @@ async def productos(ctx):
                                      "salchichas", "huevos", "caña_azucar", "algodon", "leche", "cafe",
                                      "vegetales", "pan", "queso"],
         "Materiales y Construccion": ["unidades", "acero", "vidrio", "aluminio", "plastico",
-                                       "cuero", "hormigon", "ladrillos", "madera", "tablones", "ventanas"],
+                                       "cuero", "hormigon", "ladrillos", "madera", "tablones", "ventanas" , "cemento"],
         "Electronica y Tecnologia": ["procesadores", "componentes_electronicos", "baterias", "pantallas",
                                       "smartphones", "tablets", "laptops", "monitores", "televisores",
                                       "software", "robots"],
