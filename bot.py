@@ -3,14 +3,13 @@ import discord
 from discord.ext import commands
 import requests
 
-# Configuración del TOKEN
 TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Diccionario con IDs oficiales
+# IDs oficiales de Sim Companies
 PRODUCTOS = {
     "agua": 1, "energia": 2, "petroleo": 12, "mineral_hierro": 42, "bauxita": 15, 
     "silicio": 16, "oro": 46, "oro_barras": 47, "carbon": 41, "metano": 74,
@@ -26,86 +25,49 @@ PRODUCTOS = {
     "camiones": 57, "coche_economico": 55, "coche_lujo": 56
 }
 
-@bot.event
-async def on_ready():
-    print(f'Bot {bot.user} está en línea.')
-
 @bot.command()
 async def precio(ctx, *, producto: str):
     producto_key = producto.lower().replace(" ", "_")
-
     if producto_key not in PRODUCTOS:
-        await ctx.send(f"No encuentro '{producto}'. Usa !productos.")
+        await ctx.send(f"No encuentro '{producto}'.")
         return
 
     id_prod = PRODUCTOS[producto_key]
-    
-    # CORRECCIÓN: URL de la API v3 (Realm 0 = Magnates)
+    # URL oficial v3 para el Realm 0 (Magnates)
     url = f"https://simcompanies.com{id_prod}/"
+    
+    # IMPORTANTE: El servidor a veces bloquea peticiones sin un User-Agent de navegador
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
 
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         data = response.json()
 
         if not data or len(data) == 0:
-            await ctx.send(f"No hay ofertas de **{producto}** en el mercado.")
+            await ctx.send(f"No hay ofertas para **{producto}**.")
             return
 
-        # Obtenemos la mejor oferta (la primera)
-        mejor = data[0]
-        p_actual = mejor['price']
-        cantidad = mejor['quantity']
-        calidad = mejor['quality']
-        
-        # En la API v3, el costo de transporte se deduce de 'transport' (unidades de transporte necesarias)
-        # Para calcular el costo monetario, necesitaríamos el precio del transporte actual, 
-        # pero usaremos una aproximación o el valor de la API si está disponible.
-        transp_needed = mejor.get('transport', 0)
-        
-        # Cálculos estándar
-        precio_contrato = p_actual * 0.97
-        comision_mercado = p_actual * 0.03 # La comisión real es 3%
-        neto_mercado = p_actual - comision_mercado
+        # La API v3 devuelve una LISTA de ofertas, tomamos la primera (la más barata)
+        mejor_oferta = data[0] 
+        p_actual = mejor_oferta['price']
+        cantidad = mejor_oferta['quantity']
+        calidad = mejor_oferta['quality']
+        vendedor = mejor_oferta['seller']['company']
 
-        embed = discord.Embed(
-            title=f"Mercado: {producto.capitalize()}",
-            color=discord.Color.blue()
-        )
-        embed.add_field(name="Mejor Precio", value=f"${p_actual:,.2f}", inline=True)
+        embed = discord.Embed(title=f"Mercado: {producto.capitalize()}", color=0x00ff00)
+        embed.add_field(name="Precio Mínimo", value=f"${p_actual:,.3f}", inline=True)
         embed.add_field(name="Calidad", value=f"Q{calidad}", inline=True)
         embed.add_field(name="Cantidad", value=f"{cantidad:,}", inline=True)
-        
-        embed.add_field(name="Transporte req.", value=f"{transp_needed} uds", inline=True)
-        embed.add_field(name="Venta Contrato (-3%)", value=f"${precio_contrato:,.2f}", inline=True)
-        embed.add_field(
-            name="Resumen de Venta en Mercado (Neto)",
-            value=f"Precio: ${p_actual:,.2f}\n- Comisión (3%): ${comision_mercado:,.2f}\n**Total Neto: ${neto_mercado:,.2f}**\n*(Sin contar costo de transporte)*",
-            inline=False
-        )
+        embed.add_field(name="Vendedor", value=vendedor, inline=False)
+        embed.set_footer(text="Datos de Sim Companies API v3")
 
         await ctx.send(embed=embed)
 
     except Exception as e:
-        await ctx.send("Error al conectar con la API de Sim Companies.")
-        print(f"Error: {e}")
+        print(f"Error detallado: {e}")
+        await ctx.send("Hubo un problema al consultar la API. Verifica que el ID del producto sea correcto.")
 
-@bot.command()
-async def productos(ctx):
-    lista = ", ".join(sorted(PRODUCTOS.keys()))
-    # Dividir en partes si la lista es muy larga (Discord limita a 2000 caracteres)
-    if len(lista) > 2000:
-        lista = lista[:1990] + "..."
-    
-    embed = discord.Embed(
-        title="Productos Disponibles",
-        description=f"```{lista}```",
-        color=discord.Color.green()
-    )
-    await ctx.send(embed=embed)
-
-if not TOKEN:
-    print("ERROR: Falta DISCORD_BOT_TOKEN.")
-else:
-    bot.run(TOKEN)
-    
+@bot.run(TOKEN)
