@@ -30,7 +30,7 @@ PRODUCTOS = {
     "hormigon": 101, "ladrillos": 102, "cemento": 103 , "arcilla": 104,
     "piedra_caliza": 105, "madera": 106, "tablones": 108, "ventanas": 109, 
     "robots": 114, "leche": 117, "cafe": 118, "vegetales": 120,
-    "pan": 133, "queso": 137,
+    "pan": 133, "azucar": 135, "queso": 137,
     "uvas": 10, "camiones": 59,
 }
 
@@ -156,7 +156,7 @@ async def productos(ctx):
                                "silicio", "oro", "oro_barras", "carbon", "arcilla", "piedra_caliza", "metano"],
         "Agricultura y Alimentos": ["semillas", "manzanas", "naranjas", "uvas", "grano", "filetes",
                                      "salchichas", "huevos", "caña_azucar", "algodon", "leche", "cafe",
-                                     "vegetales", "pan", "queso"],
+                                     "vegetales", "pan", "queso", "azucar"],
         "Materiales y Construccion": ["unidades", "acero", "vidrio", "aluminio", "plastico",
                                        "cuero", "hormigon", "ladrillos", "madera", "tablones", "ventanas", "cemento" ],
         "Electronica y Tecnologia": ["procesadores", "componentes_electronicos", "baterias", "pantallas",
