@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 PRODUCTOS = {
     "energia": 1, "agua": 2, "manzanas": 3, "naranjas": 4, "petroleo": 5,
-    "grano": 6, "filetes": 7, "salchichas": 8, "huevos": 9,
+    "grano": 6, "filetes": 7, "salchichas": 8, "huevos": 9, "gasolina": 11, "diesel": 12,
     "unidades": 111, "transporte": 13,
     "bauxita": 15, "silicio": 16, "aluminio": 18, "plastico": 19,
     "procesadores": 20, "componentes_electronicos": 21, "baterias": 22,
@@ -153,7 +153,7 @@ async def precioq(ctx, *, producto: str):
 async def productos(ctx):
     categorias = {
         "Energia y Mineria": ["energia", "agua", "petroleo", "mineral_hierro", "arena", "bauxita",
-                               "silicio", "oro", "oro_barras", "carbon", "arcilla", "piedra_caliza", "metano"],
+                               "silicio", "oro", "oro_barras", "carbon", "arcilla", "piedra_caliza", "metano", "gasolina", "diesel"],
         "Agricultura y Alimentos": ["semillas", "manzanas", "naranjas", "uvas", "grano", "filetes",
                                      "salchichas", "huevos", "caña_azucar", "algodon", "leche", "cafe",
                                      "vegetales", "pan", "queso", "azucar"],
